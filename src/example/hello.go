@@ -4,10 +4,18 @@ import(
 	"fmt"
 	"errors"
 	"math"
+	"strings"
+	"sort"
 )
 type person struct{
 	name string
 	age int
+}
+type Rectange struct{
+	leftX float64
+	topY float64
+	width float64
+	height float64
 }
 func main() {
 	fmt.Println("Hello, go");	
@@ -33,6 +41,7 @@ func main() {
 
 	arr3 := []int{1,2,3,4,5}
 	arr3 = append(arr3, 6)
+	arr3 = arr3[2:6]
 	fmt.Println(arr3)
 
 	vertices := make(map[string]int)
@@ -83,6 +92,44 @@ func main() {
 	j := 7
 	inc(&j)
 	fmt.Println(j)
+
+	const PI float64 = 3.1435343
+	fmt.Println(PI)
+
+	yourAge := 12
+	switch yourAge{
+		case 10: fmt.Println("you are 10")
+		case 12: fmt.Println("you are 12")
+		case 16: fmt.Println("you are 16")
+		default: fmt.Println("you are 16")
+	}
+
+	fmt.Println(safeDiv(3,0))
+	fmt.Println(safeDiv(3,2))
+
+	yPtr := new(int)
+	changeYNow(yPtr)
+	fmt.Println(*yPtr)
+
+	rect := Rectange{10,20,30,40}
+	fmt.Println("area: ",rect.area())
+
+	something := "Hello world"
+	fmt.Println(strings.Contains(something, "l"))
+	fmt.Println(strings.Index(something, "l"))
+	fmt.Println(strings.Count(something, "l"))
+	fmt.Println(strings.Replace(something, "l", "x",3))
+
+	csvString := "1,2,3,4,5"
+	fmt.Println(strings.Split(csvString, ","))
+
+	listOfLetters := []string {"c", "a", "b"}
+	sort.Strings(listOfLetters)
+	fmt.Println(listOfLetters)
+
+	listOfNums := strings.Join([]string{"1","2","3"}, ",")
+	fmt.Println(listOfNums)
+
 }
 
 func sqrt(x float64) (float64, error) {
@@ -97,4 +144,19 @@ func sum2(x int, y int) int {
 }
 func inc(x *int) {
 	*x++
+}
+func safeDiv(x int, y int) int{
+	
+	defer func (){
+		fmt.Println(recover())
+	}()
+	//panic("PANIC")
+	return x/y
+
+}
+func changeYNow(yPtr *int) {
+	*yPtr = 100
+}
+func (rect *Rectange) area() float64 {
+	return rect.width * rect.height
 }
